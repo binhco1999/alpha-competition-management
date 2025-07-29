@@ -35,6 +35,7 @@ export const competitionsData: Competition[] = [
     { id: 32, tokenName: 'NFT', condition: 'Top 11300', deadline: '31/07/2025 23:00:00', reward: 155474173 },
     { id: 33, tokenName: 'PEPEONTRON', condition: 'Top 11300', deadline: '31/07/2025 23:00:00', reward: 990 },
     { id: 34, tokenName: 'TRX', condition: 'Top 11300', deadline: '31/07/2025 23:00:00', reward: 230 },
+    { id: 35, tokenName: 'VRA', condition: 'Top 15000', deadline: '10/08/2025 15:00:00', reward: 64000 },
 ];
 
 export const alphaSoonData: AlphaSoon[] = [
