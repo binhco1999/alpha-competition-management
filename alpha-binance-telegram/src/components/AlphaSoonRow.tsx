@@ -5,6 +5,43 @@ interface AlphaSoonRowProps {
     rowData: AlphaSoon;
 }
 
+// Tag mapping function
+const getTagLabel = (tagId: number): string => {
+    switch (tagId) {
+        case 1:
+            return 'Binance Future';
+        case 2:
+            return 'Binance Spot';
+        case 3:
+            return 'Upbit';
+        default:
+            return `Tag ${tagId}`;
+    }
+};
+
+// Tag component
+const Tag = ({ tagId }: { tagId: number }) => {
+    const label = getTagLabel(tagId);
+    const getTagClass = (tagId: number) => {
+        switch (tagId) {
+            case 1:
+                return 'tag-badge binance-future';
+            case 2:
+                return 'tag-badge binance-spot';
+            case 3:
+                return 'tag-badge upbit';
+            default:
+                return 'tag-badge';
+        }
+    };
+
+    return (
+        <span className={getTagClass(tagId)}>
+            {label}
+        </span>
+    );
+};
+
 const CountdownTimer = ({ deadline }: { deadline: string }) => {
     const [timeLeft, setTimeLeft] = useState<{
         days: number;
@@ -243,6 +280,17 @@ const AlphaSoonRow = ({ rowData }: AlphaSoonRowProps) => {
                 <div>Phần thưởng</div>
                 <div className="text-right">{rowData.reward || 'Chưa có'} {rowData.reward ? rowData.tokenName : ''}</div>
             </div>
+
+            {/* Tags section */}
+            {rowData.tags && rowData.tags.length > 0 && (
+                <div className="tag-container">
+                    <div className="tag-wrapper">
+                        {rowData.tags.map((tagId) => (
+                            <Tag key={tagId} tagId={tagId} />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
