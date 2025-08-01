@@ -36,6 +36,10 @@ export const competitionsData: Competition[] = [
     { id: 33, tokenName: 'PEPEONTRON', condition: 'Top 11300', deadline: '31/07/2025 23:00:00', reward: 990 },
     { id: 34, tokenName: 'TRX', condition: 'Top 11300', deadline: '31/07/2025 23:00:00', reward: 230 },
     { id: 35, tokenName: 'VRA', condition: 'Top 15000', deadline: '10/08/2025 15:00:00', reward: 64000 },
+    { id: 36, tokenName: 'ASP', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 428 },
+    { id: 37, tokenName: 'ZRC', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 1785 },
+    { id: 38, tokenName: 'YALA', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 357 },
+    { id: 39, tokenName: 'TA', condition: 'Top 6000', deadline: '13/08/2025 23:00:00', reward: 1000 },
 ];
 
 export const alphaSoonData: AlphaSoon[] = [
@@ -52,9 +56,11 @@ export const alphaSoonData: AlphaSoon[] = [
     // { id: 12, tokenName: 'PHY', type: 'AIRDROP2', date: '26/07/2025 23:00:00', reward: '', points: '' },
     // { id: 12, tokenName: 'DELABS', type: 'IDO', date: '28/07/2025 15:00:00', reward: '', points: '' },
     // { id: 13, tokenName: 'TREE', type: 'AIRDROP', date1: '29/07/2025 19:00:00', date2: '30/07/2025 13:00:00', reward: '100', point1: '233', point2: '200', tags: [1, 2] },
-    { id: 132, tokenName: 'GAIA', type: 'AIRDROP', date1: '30/07/2025 15:00:00', date2: '31/07/2025 9:00:00', reward: '500', point1: '233', point2: '200' },
-    { id: 1323, tokenName: 'RHEA', type: 'AIRDROP2', date: '30/07/2025 20:30:00', reward: '1000', points: '200' },
-    { id: 14, tokenName: 'NAORIS', type: 'AIRDROP2', date: '31/07/2025 19:00:00', reward: '', points: '', tags: [1] },
-    { id: 142, tokenName: 'PLAY', type: 'AIRDROP2', date: '31/07/2025 15:00:00', reward: '', points: '', tags: [1] },
+    // { id: 132, tokenName: 'GAIA', type: 'AIRDROP', date1: '30/07/2025 15:00:00', date2: '31/07/2025 9:00:00', reward: '500', point1: '233', point2: '200' },
+    // { id: 1323, tokenName: 'RHEA', type: 'AIRDROP2', date: '30/07/2025 20:30:00', reward: '1000', points: '200' },
+    // { id: 14, tokenName: 'NAORIS', type: 'AIRDROP2', date: '31/07/2025 19:00:00', reward: '', points: '', tags: [1] },
+    // { id: 142, tokenName: 'PLAY', type: 'AIRDROP2', date: '31/07/2025 15:00:00', reward: '', points: '', tags: [1] },
+    { id: 141, tokenName: 'AIO', type: 'AIRDROP2', date: '02/08/2025 23:00:00', reward: '', points: '' },
+    { id: 142, tokenName: 'TOWNS', type: 'AIRDROP2', date: '05/08/2025 23:00:00', reward: '', points: '' },
     { id: 20, tokenName: 'BTR', type: 'AIRDROP2', date: '', reward: '', points: '' },
 ]; 
