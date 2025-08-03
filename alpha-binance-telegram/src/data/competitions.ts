@@ -61,8 +61,10 @@ export const alphaSoonData: AlphaSoon[] = [
     // { id: 1323, tokenName: 'RHEA', type: 'AIRDROP2', date: '30/07/2025 20:30:00', reward: '1000', points: '200' },
     // { id: 14, tokenName: 'NAORIS', type: 'AIRDROP2', date: '31/07/2025 19:00:00', reward: '', points: '', tags: [1] },
     // { id: 142, tokenName: 'PLAY', type: 'AIRDROP2', date: '31/07/2025 15:00:00', reward: '', points: '', tags: [1] },
-    { id: 141, tokenName: 'AIO', type: 'AIRDROP2', date: '02/08/2025 23:00:00', reward: '', points: '' },
-    { id: 143, tokenName: 'MM', type: 'AIRDROP2', date: '03/08/2025 23:00:00', reward: '', points: '' },
+    // { id: 141, tokenName: 'AIO', type: 'AIRDROP2', date: '02/08/2025 23:00:00', reward: '', points: '' },
+    // { id: 143, tokenName: 'MM', type: 'AIRDROP2', date: '03/08/2025 23:00:00', reward: '', points: '' },
+    { id: 143, tokenName: 'CYCLE', type: 'AIRDROP2', date: '04/08/2025 23:00:00', reward: '', points: '' },
+    { id: 143, tokenName: 'DARK', type: 'AIRDROP2', date: '04/08/2025 23:00:00', reward: '', points: '' },
     { id: 142, tokenName: 'TOWNS', type: 'AIRDROP2', date: '05/08/2025 23:00:00', reward: '', points: '' },
     { id: 20, tokenName: 'BTR', type: 'AIRDROP2', date: '', reward: '', points: '' },
 ]; 
