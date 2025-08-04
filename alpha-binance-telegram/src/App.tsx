@@ -3,8 +3,8 @@ import CompetitionTable from "./components/CompetitionTable";
 import AlphaSoonTable from "./components/AlphaSoonTable";
 // import LibreChat from "./components/LibreChat";
 
-
-// import MysteryBox from "./components/MysteryBox";
+//unlock it to show the mystery box
+import MysteryBox from "./components/MysteryBox";
 
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -18,7 +18,9 @@ function App() {
     const stored = localStorage.getItem('currentMode');
     return stored === 'alphaSoon' ? 'alphaSoon' : 'competition';
   });
-  // const [showMysteryBox, setShowMysteryBox] = useState(false);
+
+  //unlock it to show the mystery box
+  const [showMysteryBox, setShowMysteryBox] = useState(false);
 
   useEffect(() => {
     // Set theme class on <html>
@@ -46,19 +48,21 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // const handleMysteryBoxClose = () => {
-  //   setShowMysteryBox(false);
-  //   // Set a flag in localStorage to hide the box for 1 day
-  //   localStorage.setItem('mysteryBoxDismissedAt', Date.now().toString());
-  // };
+  //unlock it to show the mystery box
+  const handleMysteryBoxClose = () => {
+    setShowMysteryBox(false);
+    // Set a flag in localStorage to hide the box for 1 day
+    localStorage.setItem('mysteryBoxDismissedAt', Date.now().toString());
+  };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     // Only show the box if not dismissed in the last 24 hours
-    // const dismissedAt = localStorage.getItem('mysteryBoxDismissedAt');
-    // if (!dismissedAt || (Date.now() - parseInt(dismissedAt, 10)) > 24 * 60 * 60 * 1000) {
-    //   setShowMysteryBox(true);
-    // }
+    //unlock it to show the mystery box
+    const dismissedAt = localStorage.getItem('mysteryBoxDismissedAt');
+    if (!dismissedAt || (Date.now() - parseInt(dismissedAt, 10)) > 24 * 60 * 60 * 1000) {
+      setShowMysteryBox(true);
+    }
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -112,9 +116,10 @@ function App() {
       {/* <div className="ai-chat-container"><LibreChat isOpen={showLibreChat} onToggle={toggleLibreChat} /></div> */}
 
       {/* Mystery Box Giveaway - only show if not dismissed */}
-      {/* {showMysteryBox && (
+      {/* unlock it to show the mystery box */}
+      {showMysteryBox && (
         <MysteryBox onClose={handleMysteryBoxClose} />
-      )} */}
+      )}
       <div className="copyright-text">© 71 Ambition - ver 2.0.1</div>
     </div>
   );
