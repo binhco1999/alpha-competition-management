@@ -4,7 +4,7 @@ import AlphaSoonTable from "./components/AlphaSoonTable";
 // import LibreChat from "./components/LibreChat";
 
 //unlock it to show the mystery box
-import MysteryBox from "./components/MysteryBox";
+// import MysteryBox from "./components/MysteryBox";
 
 function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -20,7 +20,7 @@ function App() {
   });
 
   //unlock it to show the mystery box
-  const [showMysteryBox, setShowMysteryBox] = useState(false);
+  // const [showMysteryBox, setShowMysteryBox] = useState(false);
 
   useEffect(() => {
     // Set theme class on <html>
@@ -49,20 +49,20 @@ function App() {
   };
 
   //unlock it to show the mystery box
-  const handleMysteryBoxClose = () => {
-    setShowMysteryBox(false);
-    // Set a flag in localStorage to hide the box for 1 day
-    localStorage.setItem('mysteryBoxDismissedAt', Date.now().toString());
-  };
+  // const handleMysteryBoxClose = () => {
+  //   setShowMysteryBox(false);
+  //   // Set a flag in localStorage to hide the box for 1 day
+  //   localStorage.setItem('mysteryBoxDismissedAt', Date.now().toString());
+  // };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     // Only show the box if not dismissed in the last 24 hours
     //unlock it to show the mystery box
-    const dismissedAt = localStorage.getItem('mysteryBoxDismissedAt');
-    if (!dismissedAt || (Date.now() - parseInt(dismissedAt, 10)) > 24 * 60 * 60 * 1000) {
-      setShowMysteryBox(true);
-    }
+    // const dismissedAt = localStorage.getItem('mysteryBoxDismissedAt');
+    // if (!dismissedAt || (Date.now() - parseInt(dismissedAt, 10)) > 24 * 60 * 60 * 1000) {
+    //   setShowMysteryBox(true);
+    // }
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -117,9 +117,9 @@ function App() {
 
       {/* Mystery Box Giveaway - only show if not dismissed */}
       {/* unlock it to show the mystery box */}
-      {showMysteryBox && (
+      {/* {showMysteryBox && (
         <MysteryBox onClose={handleMysteryBoxClose} />
-      )}
+      )} */}
       <div className="copyright-text">© 71 Ambition - ver 2.0.1</div>
     </div>
   );
