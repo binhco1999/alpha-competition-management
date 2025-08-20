@@ -36,11 +36,14 @@ export const competitionsData: Competition[] = [
     // { id: 34, tokenName: 'TRX', condition: 'Top 11300', deadline: '31/07/2025 23:00:00', reward: 230 },
     // { id: 30, tokenName: 'UPTOP', condition: 'Top 5580', deadline: '03/08/2025 14:00:00', reward: 1700 },
     // { id: 35, tokenName: 'VRA', condition: 'Top 15000', deadline: '10/08/2025 15:00:00', reward: 64000 },
-    { id: 36, tokenName: 'ASP', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 428 },
-    { id: 37, tokenName: 'ZRC', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 1785 },
-    { id: 38, tokenName: 'YALA', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 357 },
-    { id: 39, tokenName: 'TA', condition: 'Top 6000', deadline: '13/08/2025 23:00:00', reward: 1000 },
-    { id: 40, tokenName: 'MIA', condition: 'Top 6700', deadline: '15/08/2025 14:00:00', reward: 740 },
+    // { id: 36, tokenName: 'ASP', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 428 },
+    // { id: 37, tokenName: 'ZRC', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 1785 },
+    // { id: 38, tokenName: 'YALA', condition: 'Top 14000', deadline: '13/08/2025 23:00:00', reward: 357 },
+    // { id: 39, tokenName: 'TA', condition: 'Top 6000', deadline: '13/08/2025 23:00:00', reward: 1000 },
+    // { id: 40, tokenName: 'MIA', condition: 'Top 6700', deadline: '15/08/2025 14:00:00', reward: 740 },
+    { id: 41, tokenName: 'GAME', condition: 'Top 10250', deadline: '24/08/2025 14:00:00', reward: 20000 },
+    { id: 42, tokenName: 'MLK', condition: 'Top 12500', deadline: '30/08/2025 15:00:00', reward: 380 },
+    { id: 43, tokenName: 'WILD', condition: 'Top 12500', deadline: '31/08/2025 19:00:00', reward: 200 },
 ];
 
 export const alphaSoonData: AlphaSoon[] = [
@@ -73,7 +76,10 @@ export const alphaSoonData: AlphaSoon[] = [
     // { id: 213, tokenName: 'K', type: 'AIRDROP2', date: '08/08/2025 23:00:00', reward: '', points: '' },
     // { id: 2132, tokenName: 'BSU', type: 'AIRDROP2', date: '09/08/2025 23:00:00', reward: '', points: '' },
     // { id: 213, tokenName: 'SLAY', type: 'AIRDROP2', date: '11/08/2025 23:00:00', reward: '', points: '' },
-    { id: 20, tokenName: 'BTR', type: 'AIRDROP2', date: '13/08/2025 15:00:00', reward: '', points: '' },
-    { id: 213, tokenName: 'OVL', type: 'AIRDROP2', date: '14/08/2025 23:00:00', reward: '', points: '' },
-    { id: 2123, tokenName: 'AIBOT', type: 'AIRDROP2', date: '14/08/2025 23:00:00', reward: '', points: '' },
+    // { id: 20, tokenName: 'BTR', type: 'AIRDROP2', date: '13/08/2025 15:00:00', reward: '', points: '' },
+    // { id: 213, tokenName: 'OVL', type: 'AIRDROP2', date: '14/08/2025 23:00:00', reward: '', points: '' },
+    // { id: 2123, tokenName: 'AIBOT', type: 'AIRDROP2', date: '14/08/2025 23:00:00', reward: '', points: '' },
+    { id: 2123, tokenName: 'DGC', type: 'AIRDROP2', date: '20/08/2025 23:00:00', reward: '', points: '' },
+    { id: 123, tokenName: 'ARIA', type: 'AIRDROP2', date: '21/08/2025 23:00:00', reward: '', points: '' },
+    { id: 12123, tokenName: 'SAPIEN', type: 'AIRDROP2', date: '21/08/2025 23:00:00', reward: '', points: '', tags: [1] },
 ]; 
