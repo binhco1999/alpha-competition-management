@@ -81,5 +81,5 @@ export const alphaSoonData: AlphaSoon[] = [
     // { id: 2123, tokenName: 'AIBOT', type: 'AIRDROP2', date: '14/08/2025 23:00:00', reward: '', points: '' },
     { id: 2123, tokenName: 'DGC', type: 'AIRDROP2', date: '20/08/2025 23:00:00', reward: '', points: '' },
     { id: 123, tokenName: 'ARIA', type: 'AIRDROP2', date: '21/08/2025 23:00:00', reward: '', points: '' },
-    { id: 12123, tokenName: 'SAPIEN', type: 'AIRDROP2', date: '21/08/2025 23:00:00', reward: '', points: '', tags: [1] },
+    { id: 12123, tokenName: 'SAPIEN', type: 'AIRDROP2', date: '21/08/2025 00:00:00', reward: '', points: '', tags: [1] },
 ]; 
