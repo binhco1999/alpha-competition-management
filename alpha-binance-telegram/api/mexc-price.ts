@@ -26,8 +26,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    const pair = symbol.toUpperCase() + "_USDT";
-    const mexcUrl = `https://www.mexc.com/open/api/v2/market/ticker?symbol=${pair}`;
+    const pair = symbol.toUpperCase() + "USDT";
+    const mexcUrl = `https://api.mexc.com/api/v3/ticker/price?symbol=${pair}`;
 
     // Try MEXC first with timeout
     try {
@@ -46,9 +46,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (mexcResponse.ok) {
         const mexcData = await mexcResponse.json();
 
-        // Validate MEXC response data
-        if (mexcData?.data?.[0]?.last && mexcData.code === 200) {
-          res.status(200).json(mexcData);
+        // Debug: Log the MEXC response
+        console.log('MEXC API Response:', JSON.stringify(mexcData));
+
+        // Check if MEXC returned an error response
+        if (mexcData.error || mexcData.msg) {
+          console.log('MEXC API returned error:', mexcData.error || mexcData.msg);
+          throw new Error(`MEXC API error: ${mexcData.error || mexcData.msg}`);
+        }
+
+        // Check if MEXC returned an empty response (for non-existent pairs)
+        if (!mexcData || Object.keys(mexcData).length === 0) {
+          console.log('MEXC API returned empty response - pair may not exist');
+          throw new Error('Trading pair not found on MEXC');
+        }
+
+        // Validate MEXC v3 API response data
+        console.log('Checking MEXC data:', {
+          hasSymbol: !!mexcData?.symbol,
+          hasPrice: !!mexcData?.price,
+          symbol: mexcData?.symbol,
+          price: mexcData?.price
+        });
+
+        if (mexcData?.symbol && mexcData?.price) {
+          // Transform v3 response to match expected format
+          const transformedData = {
+            code: 200,
+            data: [{
+              symbol: mexcData.symbol.replace('USDT', '_USDT'),
+              last: String(mexcData.price),
+              volume: '0', // Price API doesn't provide volume
+              high: '0',   // Price API doesn't provide high
+              low: '0',    // Price API doesn't provide low
+              change: '0', // Price API doesn't provide change
+              change_rate: '0', // Price API doesn't provide change rate
+              source: 'mexc'
+            }]
+          };
+          console.log('Sending transformed MEXC data:', JSON.stringify(transformedData));
+          res.status(200).json(transformedData);
           return;
         } else {
           console.log('MEXC API returned invalid data, trying Bybit...');

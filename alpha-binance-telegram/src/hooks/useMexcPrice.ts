@@ -21,8 +21,11 @@ export const useMexcPrice = (symbol: string) => {
         setError('');
 
         try {
-            const pair = symbol.toUpperCase() + "_USDT";
-            const url = `/open/api/v2/market/ticker?symbol=${pair}`;
+            const pair = symbol.toUpperCase() + "USDT";
+
+            // Always use our Vercel API to avoid CORS issues
+            // The API handles MEXC calls server-side and returns proper CORS headers
+            const url = `https://alpha-competition-management.vercel.app/api/mexc-price?symbol=${pair}`;
 
             // Add timeout to prevent hanging requests
             const controller = new AbortController();
@@ -40,18 +43,19 @@ export const useMexcPrice = (symbol: string) => {
 
             const data = await response.json();
 
+            // Handle API response format
             if (data.code && data.code !== 200) {
+                // Your backend API error
                 throw new Error(`API Error: ${data.msg || `code ${data.code}`}`);
-            }
-
-            if (data?.data?.[0]?.last) {
+            } else if (data?.data?.[0]?.last) {
+                // Your backend API success response
                 const parsedPrice = parseFloat(data.data[0].last);
                 const parsedChangeRate = parseFloat(data.data[0].change_rate);
 
                 if (Number.isFinite(parsedPrice)) {
                     setPrice(parsedPrice);
                     setChangeRate(Number.isFinite(parsedChangeRate) ? parsedChangeRate : null);
-                    retryCountRef.current = 0; // Reset retry count on success
+                    retryCountRef.current = 0;
                 } else {
                     throw new Error(`Invalid price for ${symbol.toUpperCase()}`);
                 }
