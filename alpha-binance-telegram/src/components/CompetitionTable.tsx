@@ -11,6 +11,8 @@ const CompetitionTable = () => {
     const [prizes, setPrizes] = useState<Record<number, number>>({});
     const [changeRates, setChangeRates] = useState<Record<number, number | null>>({});
     const [triggerFetch, setTriggerFetch] = useState(0);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [globalError, setGlobalError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState(() => {
         const stored = localStorage.getItem('competition_searchTerm');
         return stored || '';
@@ -65,6 +67,11 @@ const CompetitionTable = () => {
         if (changeRate !== undefined) {
             setChangeRates(prev => ({ ...prev, [id]: changeRate }));
         }
+
+        // Clear global error if we successfully get a price
+        if (prize > 0) {
+            setGlobalError(null);
+        }
     }, []);
 
     // Get unique token names for dropdown
@@ -115,7 +122,22 @@ const CompetitionTable = () => {
     }, [prizes, selectedTokens]);
 
     const handleReload = () => {
+        setIsRefreshing(true);
         setTriggerFetch(prev => prev + 1);
+
+        // Clear any existing errors and reset state
+        setPrizes({});
+        setChangeRates({});
+
+        // Add a small delay before triggering the fetch to ensure state is cleared
+        setTimeout(() => {
+            setTriggerFetch(prev => prev + 1);
+        }, 100);
+
+        // Reset refreshing state after a reasonable delay
+        setTimeout(() => {
+            setIsRefreshing(false);
+        }, 3000);
     };
 
     // Helper function to check if a competition is expired
@@ -146,6 +168,20 @@ const CompetitionTable = () => {
 
         return filtered;
     }, [debouncedSearchTerm, hideExpired]);
+
+    // Check for global price loading issues
+    useEffect(() => {
+        const visibleCompetitions = filteredCompetitions;
+        const loadedPrices = visibleCompetitions.filter(comp => prizes[comp.id] && prizes[comp.id] > 0);
+        const failedToLoad = visibleCompetitions.length - loadedPrices.length;
+
+        // If more than 50% of visible competitions failed to load prices, show global error
+        if (visibleCompetitions.length > 0 && failedToLoad > visibleCompetitions.length * 0.5) {
+            setGlobalError(`Unable to load prices for ${failedToLoad} out of ${visibleCompetitions.length} tokens. Please try refreshing.`);
+        } else if (loadedPrices.length > 0) {
+            setGlobalError(null);
+        }
+    }, [prizes, filteredCompetitions]);
 
     // Sort competitions
     const sortedCompetitions = useMemo(() => {
@@ -306,12 +342,31 @@ const CompetitionTable = () => {
                     </button>
                     <button
                         onClick={handleReload}
-                        className="btn-refresh"
+                        disabled={isRefreshing}
+                        className={`btn-refresh ${isRefreshing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        title={isRefreshing ? 'Refreshing prices...' : 'Refresh prices'}
                     >
-                        ⟳
+                        {isRefreshing ? '⏳' : '⟳'}
                     </button>
                 </div>
             </div>
+
+            {/* Global Error Display */}
+            {globalError && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                    <div className="flex items-center justify-between">
+                        <span className="text-sm">
+                            ⚠️ {globalError}
+                        </span>
+                        <button
+                            onClick={() => setGlobalError(null)}
+                            className="text-red-500 hover:text-red-700 text-lg"
+                        >
+                            ×
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* Collapsible Token Filter */}
             {showTokenFilter && (

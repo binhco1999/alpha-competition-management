@@ -29,58 +29,90 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const pair = symbol.toUpperCase() + "_USDT";
     const mexcUrl = `https://www.mexc.com/open/api/v2/market/ticker?symbol=${pair}`;
 
-    // Try MEXC first
+    // Try MEXC first with timeout
     try {
+      const mexcController = new AbortController();
+      const mexcTimeout = setTimeout(() => mexcController.abort(), 5000); // 5 second timeout
+
       const mexcResponse = await fetch(mexcUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; AlphaCompetition/1.0)',
         },
+        signal: mexcController.signal
       });
+
+      clearTimeout(mexcTimeout);
 
       if (mexcResponse.ok) {
         const mexcData = await mexcResponse.json();
-        res.status(200).json(mexcData);
-        return;
+
+        // Validate MEXC response data
+        if (mexcData?.data?.[0]?.last && mexcData.code === 200) {
+          res.status(200).json(mexcData);
+          return;
+        } else {
+          console.log('MEXC API returned invalid data, trying Bybit...');
+        }
+      } else {
+        console.log(`MEXC API responded with status: ${mexcResponse.status}, trying Bybit...`);
       }
     } catch (mexcError) {
-      console.log('MEXC API failed, trying Bybit...');
+      console.log('MEXC API failed, trying Bybit...', mexcError);
     }
 
     // Fallback to Bybit if MEXC fails
     const bybitSymbol = symbol.toUpperCase() + "USDT";
     const bybitUrl = `https://api.bybit.com/v5/market/tickers?category=spot&symbol=${bybitSymbol}`;
 
-    const bybitResponse = await fetch(bybitUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; AlphaCompetition/1.0)',
-      },
-    });
+    try {
+      const bybitController = new AbortController();
+      const bybitTimeout = setTimeout(() => bybitController.abort(), 5000); // 5 second timeout
 
-    if (!bybitResponse.ok) {
-      throw new Error(`Bybit API responded with status: ${bybitResponse.status}`);
-    }
+      const bybitResponse = await fetch(bybitUrl, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; AlphaCompetition/1.0)',
+        },
+        signal: bybitController.signal
+      });
 
-    const bybitData = await bybitResponse.json();
+      clearTimeout(bybitTimeout);
 
-    // Transform Bybit response to match MEXC format
-    if (bybitData.retCode === 0 && bybitData.result.list && bybitData.result.list.length > 0) {
-      const ticker = bybitData.result.list[0];
-      const transformedData = {
-        code: 200,
-        data: [{
-          symbol: ticker.symbol.replace('USDT', '_USDT'),
-          price: String(ticker.lastPrice),
-          volume: String(ticker.volume24h),
-          high: String(ticker.highPrice24h),
-          low: String(ticker.lowPrice24h),
-          change: String(ticker.price24hPcnt),
-          changeRate: String(ticker.price24hPcnt),
-          source: 'bybit'
-        }]
-      };
-      res.status(200).json(transformedData);
-    } else {
-      throw new Error('Invalid response from Bybit API');
+      if (!bybitResponse.ok) {
+        throw new Error(`Bybit API responded with status: ${bybitResponse.status}`);
+      }
+
+      const bybitData = await bybitResponse.json();
+
+      // Transform Bybit response to match MEXC format
+      if (bybitData.retCode === 0 && bybitData.result.list && bybitData.result.list.length > 0) {
+        const ticker = bybitData.result.list[0];
+
+        // Validate the data before transforming
+        if (ticker.lastPrice && parseFloat(ticker.lastPrice) > 0) {
+          const transformedData = {
+            code: 200,
+            data: [{
+              symbol: ticker.symbol.replace('USDT', '_USDT'),
+              last: String(ticker.lastPrice), // Use 'last' to match MEXC format
+              volume: String(ticker.volume24h),
+              high: String(ticker.highPrice24h),
+              low: String(ticker.lowPrice24h),
+              change: String(ticker.price24hPcnt),
+              change_rate: String(ticker.price24hPcnt), // Use 'change_rate' to match MEXC format
+              source: 'bybit'
+            }]
+          };
+          res.status(200).json(transformedData);
+          return;
+        } else {
+          throw new Error('Invalid price data from Bybit API');
+        }
+      } else {
+        throw new Error('Invalid response from Bybit API');
+      }
+    } catch (bybitError) {
+      console.error('Bybit API also failed:', bybitError);
+      throw new Error('Both MEXC and Bybit APIs failed');
     }
 
   } catch (error) {

@@ -66,10 +66,18 @@ const CountdownTimer = ({ deadline }: { deadline: string }) => {
 const CompetitionRow = ({ rowData, triggerFetch, onPriceUpdate }: CompetitionRowProps) => {
     const { price, changeRate, loading, error, fetchPrice } = useMexcPrice(rowData.tokenName);
 
+    // Initial price fetch with delay to prevent race conditions
     useEffect(() => {
-        fetchPrice();
-    }, [fetchPrice]);
+        // Add a small delay based on the row ID to stagger initial requests
+        const initialDelay = (rowData.id % 10) * 100; // 0-900ms delay based on ID
+        const timer = setTimeout(() => {
+            fetchPrice();
+        }, initialDelay);
 
+        return () => clearTimeout(timer);
+    }, [fetchPrice, rowData.id]);
+
+    // Handle manual refresh trigger
     useEffect(() => {
         if (triggerFetch > 0) {
             fetchPrice();
@@ -78,6 +86,7 @@ const CompetitionRow = ({ rowData, triggerFetch, onPriceUpdate }: CompetitionRow
 
     const estimatedPrize = price ? price * rowData.reward : 0;
 
+    // Update parent component with price data
     useEffect(() => {
         onPriceUpdate(rowData.id, estimatedPrize, changeRate);
     }, [estimatedPrize, onPriceUpdate, rowData.id, changeRate]);
@@ -115,11 +124,24 @@ const CompetitionRow = ({ rowData, triggerFetch, onPriceUpdate }: CompetitionRow
                 <h3 className={`token-name font-bold text-2xl ${hasExpired ? '' : 'text-black'}`}>{rowData.tokenName}</h3>
                 <div className="text-right price-and-change-rate">
                     <div className={`font-bold text-lg p-1 rounded ${isLow50 ? 'low-50' : 'normal-prize'} ${isLow20 ? 'low-20' : ''}`}>
-                        {loading ? '...' : (estimatedPrize > 0 ? `$${estimatedPrize.toFixed(2)}` : '...')}
+                        {loading ? (
+                            <span className="text-gray-500">Loading...</span>
+                        ) : error ? (
+                            <span className="text-red-500 text-sm">Error</span>
+                        ) : estimatedPrize > 0 ? (
+                            `$${estimatedPrize.toFixed(2)}`
+                        ) : (
+                            <span className="text-gray-400">No price</span>
+                        )}
                     </div>
                     {changeRateText && (
                         <div className={`rate-text text-sm ${isPositiveChange ? 'text-green-600' : 'text-red-600'}`}>
                             {changeRateText}
+                        </div>
+                    )}
+                    {error && (
+                        <div className="text-red-500 text-xs mt-1">
+                            {error}
                         </div>
                     )}
                 </div>
@@ -139,7 +161,24 @@ const CompetitionRow = ({ rowData, triggerFetch, onPriceUpdate }: CompetitionRow
                 <div className="text-right">{rowData.reward.toLocaleString()}</div>
                 <div>Giá hiện tại</div>
                 <div className="text-right">
-                    {loading ? '...' : (error ? <span className="text-red-500">Vô giá</span> : price)}
+                    {loading ? (
+                        <span className="text-gray-500">Loading...</span>
+                    ) : error ? (
+                        <div className="flex flex-col items-end gap-1">
+                            <span className="text-red-500 text-sm">Error</span>
+                            <button
+                                onClick={() => fetchPrice()}
+                                className="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded"
+                                title="Retry loading price"
+                            >
+                                Retry
+                            </button>
+                        </div>
+                    ) : price ? (
+                        <span className="font-medium">${price.toFixed(6)}</span>
+                    ) : (
+                        <span className="text-gray-400">No price</span>
+                    )}
                 </div>
             </div>
         </div>
