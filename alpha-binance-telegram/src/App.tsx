@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CompetitionTable from "./components/CompetitionTable";
 import AlphaSoonTable from "./components/AlphaSoonTable";
+import MaintenanceMode from "./components/MaintenanceMode";
 // import LibreChat from "./components/LibreChat";
 
 //unlock it to show the mystery box
@@ -17,6 +18,11 @@ function App() {
   const [currentMode, setCurrentMode] = useState<'competition' | 'alphaSoon'>(() => {
     const stored = localStorage.getItem('currentMode');
     return stored === 'alphaSoon' ? 'alphaSoon' : 'competition';
+  });
+
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(() => {
+    const stored = localStorage.getItem('isMaintenanceMode');
+    return stored === 'true';
   });
 
   //unlock it to show the mystery box
@@ -39,6 +45,11 @@ function App() {
   useEffect(() => {
     localStorage.setItem('currentMode', currentMode);
   }, [currentMode]);
+
+  // Save maintenance mode to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('isMaintenanceMode', isMaintenanceMode.toString());
+  }, [isMaintenanceMode]);
 
   const handleScroll = () => {
     setShowBackToTop(window.scrollY > 100);
@@ -80,6 +91,20 @@ function App() {
     setCurrentMode(prev => prev === 'competition' ? 'alphaSoon' : 'competition');
   };
 
+  const toggleMaintenanceMode = () => {
+    setIsMaintenanceMode(prev => !prev);
+  };
+
+  // Show maintenance mode if enabled
+  if (isMaintenanceMode) {
+    return (
+      <MaintenanceMode
+        isMaintenanceMode={isMaintenanceMode}
+        onToggleMaintenance={toggleMaintenanceMode}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen p-2 wrapper-project">
       <main className="max-w-md mx-auto p-4">
@@ -92,6 +117,13 @@ function App() {
             {currentMode === 'competition' ? 'Alpha mode' : 'Competition mode'}
           </button>
           <div className="flex items-center gap-2">
+            <button
+              onClick={toggleMaintenanceMode}
+              className="mode-toggle-btn px-3 py-1 text-sm font-medium rounded border transition-colors bg-orange-500 text-white border-orange-500 hover:bg-orange-600"
+              title="Toggle maintenance mode"
+            >
+              🔧 Maintenance
+            </button>
             <button
               onClick={toggleTheme}
               className="theme-toggle-btn"

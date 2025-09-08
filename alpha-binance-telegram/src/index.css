@@ -1833,3 +1833,317 @@ body {
             inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 }
+
+/* Maintenance Mode Styles */
+.maintenance-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.maintenance-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: slide-in 0.6s ease-out;
+}
+
+.maintenance-card:hover {
+    transform: translateY(-5px) rotateX(5deg) rotateY(2deg);
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.maintenance-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.maintenance-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffb300;
+    text-shadow: 0 0 15px rgba(255, 179, 0, 0.6);
+    margin-bottom: 12px;
+    animation: glow 2s ease-in-out infinite;
+}
+
+.maintenance-subtitle {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ff8c00;
+    text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+    margin-bottom: 16px;
+}
+
+.maintenance-description {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+    background: linear-gradient(145deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    animation: pulse-3d 2s ease-in-out infinite;
+}
+
+.progress-container {
+    margin-top: 16px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 5%;
+    background: linear-gradient(90deg, #ff8c00, #ff6b00);
+    border-radius: 6px;
+    animation: progressGlow 2s ease-in-out infinite;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+    }
+}
+
+@keyframes progressShine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.progress-text {
+    color: #ffb300;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 179, 0, 0.6);
+}
+
+.contact-info {
+    margin-top: 16px;
+    text-align: left;
+}
+
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.contact-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.contact-value {
+    color: #ffb300;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 179, 0, 0.6);
+    font-size: 0.9rem;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.feature-item {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+.feature-item:hover {
+    color: #ffb300;
+    text-shadow: 0 0 8px rgba(255, 179, 0, 0.6);
+    transform: translateX(5px);
+}
+
+.maintenance-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.footer-brand {
+    color: #ffb300;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 179, 0, 0.6);
+}
+
+/* Dark mode adjustments for maintenance */
+.dark .maintenance-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark .maintenance-card:hover {
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Light mode adjustments for maintenance */
+.light .maintenance-card {
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02));
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.light .maintenance-card:hover {
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.light .maintenance-title,
+.light .maintenance-subtitle {
+    color: #ff6b00;
+}
+
+.light .maintenance-description,
+.light .footer-text {
+    color: #555;
+}
+
+.light .contact-label {
+    color: #666;
+}
+
+.light .feature-item {
+    color: #555;
+}
+
+.light .feature-item:hover {
+    color: #ff6b00;
+}
+
+/* Responsive adjustments for maintenance mode */
+@media (max-width: 768px) {
+    .maintenance-card {
+        padding: 20px;
+        margin: 0 10px;
+    }
+
+    .maintenance-icon {
+        font-size: 2.5rem;
+    }
+
+    .maintenance-title {
+        font-size: 1.5rem;
+    }
+
+    .maintenance-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .time-display {
+        font-size: 1rem;
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .maintenance-card {
+        padding: 16px;
+        margin: 0 5px;
+    }
+
+    .maintenance-icon {
+        font-size: 2rem;
+    }
+
+    .maintenance-title {
+        font-size: 1.3rem;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .time-display {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+}
