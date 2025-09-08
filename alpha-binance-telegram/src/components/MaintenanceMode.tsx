@@ -57,7 +57,7 @@ const MaintenanceMode: React.FC<MaintenanceModeProps> = ({
                     {/* Time Display */}
                     <div className="maintenance-card">
                         <div className="maintenance-icon">⏰</div>
-                        <h3 className="maintenance-subtitle">Current Time</h3>
+                        <h3 className="maintenance-subtitle">Thời gian hiện tại</h3>
                         <div className="time-display">
                             {currentTime.toLocaleString('vi-VN', {
                                 weekday: 'long',
@@ -75,12 +75,12 @@ const MaintenanceMode: React.FC<MaintenanceModeProps> = ({
                     {/* Progress Bar */}
                     <div className="maintenance-card">
                         <div className="maintenance-icon">📊</div>
-                        <h3 className="maintenance-subtitle">Maintenance Progress</h3>
+                        <h3 className="maintenance-subtitle">Quá trình bảo trì</h3>
                         <div className="progress-container">
                             <div className="progress-bar">
                                 <div className="progress-fill"></div>
                             </div>
-                            <div className="progress-text">Estimated completion: 5%</div>
+                            <div className="progress-text">Hoàn thành ước tính: 5%</div>
                         </div>
                     </div>
 
