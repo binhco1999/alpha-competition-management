@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 
 interface MaintenanceModeProps {
     isMaintenanceMode: boolean;
-    onToggleMaintenance: () => void;
+    // onToggleMaintenance: () => void;
 }
 
 const MaintenanceMode: React.FC<MaintenanceModeProps> = ({
     isMaintenanceMode,
-    onToggleMaintenance
+    // onToggleMaintenance
 }) => {
     const [currentTime, setCurrentTime] = useState(new Date());
 
