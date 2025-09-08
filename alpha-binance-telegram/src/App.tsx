@@ -96,10 +96,10 @@ function App() {
   };
 
   // Show maintenance mode if enabled
-  if (isMaintenanceMode) {
+  if (true) {
     return (
       <MaintenanceMode
-        isMaintenanceMode={isMaintenanceMode}
+        isMaintenanceMode={true}
       // onToggleMaintenance={toggleMaintenanceMode}
       />
     );
