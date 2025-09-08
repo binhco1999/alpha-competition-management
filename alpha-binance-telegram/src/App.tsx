@@ -100,7 +100,7 @@ function App() {
     return (
       <MaintenanceMode
         isMaintenanceMode={isMaintenanceMode}
-        onToggleMaintenance={toggleMaintenanceMode}
+      // onToggleMaintenance={toggleMaintenanceMode}
       />
     );
   }
